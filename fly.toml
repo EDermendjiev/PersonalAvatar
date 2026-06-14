@@ -11,9 +11,10 @@
 # PUSHOVER_TOKEN, SUPABASE_URL, SUPABASE_KEY, SESSION_SECRET.
 
 app = 'personalavatar'
-primary_region = 'iad'               # where Fly Launch placed the machine. Your Supabase is in
-                                     # eu-central-1 (Frankfurt); for lower DB latency migrate to
-                                     # 'fra' later (recreate the machine, or use scripts/deploy.sh).
+primary_region = 'fra'               # Frankfurt — closest Fly region to the Supabase eu-central-1
+                                     # (Frankfurt) DB, so admin/chat DB round-trips stay fast. NOTE:
+                                     # changing this only places NEW machines; delete the old `iad`
+                                     # machine in the dashboard so the next deploy recreates in `fra`.
 
 [build]
 
