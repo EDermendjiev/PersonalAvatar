@@ -1,23 +1,46 @@
-# fly.toml app configuration file generated for personalavatar on 2026-06-14T18:27:39Z
+# Fly.io config — ROOT copy, used by the web dashboard / GitHub-integration build
+# and a bare `fly deploy`. (The CLI script scripts/deploy.sh uses its own copy at
+# scripts/fly.toml via --config; that one targets a fresh `avatar-emil` app in
+# `fra`. This root copy matches the app you launched from the dashboard.)
 #
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+# It replaces the auto-generated config Fly Launch created, whose `internal_port`
+# was 8080 while the container listens on 8000 -> "instance refused connection".
 #
+# NOTE: the app also needs its secrets set in the dashboard (app -> Secrets):
+# OPENROUTER_API_KEY, MODEL, OWNER_NAME, ADMIN_PASSWORD, PUSHOVER_USER,
+# PUSHOVER_TOKEN, SUPABASE_URL, SUPABASE_KEY, SESSION_SECRET.
 
 app = 'personalavatar'
-primary_region = 'iad'
+primary_region = 'iad'               # where Fly Launch placed the machine. Your Supabase is in
+                                     # eu-central-1 (Frankfurt); for lower DB latency migrate to
+                                     # 'fra' later (recreate the machine, or use scripts/deploy.sh).
 
 [build]
 
+[env]
+  PORT = '8000'                      # makes uvicorn listen on 8000 to match internal_port below
+  COOKIE_SECURE = '1'                # production is HTTPS -> admin session cookie must be Secure
+
 [http_service]
-  internal_port = 8080
+  internal_port = 8000               # the port the container actually listens on (was 8080)
   force_https = true
-  auto_stop_machines = 'stop'
   auto_start_machines = true
-  min_machines_running = 0
+  auto_stop_machines = 'stop'        # stop EXTRA machines when idle...
+  min_machines_running = 1           # ...but always keep 1 warm (no cold start on chat)
   processes = ['app']
 
+  [http_service.concurrency]
+    type = 'connections'             # SSE holds one connection for the whole streamed reply
+    soft_limit = 90                  # (only relevant with >1 machine) start another past this
+    hard_limit = 150                 # one machine accepts up to this many
+
+  [[http_service.checks]]
+    method = 'GET'
+    path = '/api/config'             # returns 200 with no DB hit — a clean health check
+    interval = '15s'
+    timeout = '3s'
+    grace_period = '10s'
+
 [[vm]]
+  size = 'shared-cpu-2x'
   memory = '1gb'
-  cpu_kind = 'shared'
-  cpus = 1
-  memory_mb = 256
