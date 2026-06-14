@@ -5,7 +5,7 @@
 set -euo pipefail
 
 # Keep this in sync with `app = "..."` in scripts/fly.toml.
-APP="avatar-emil"
+APP="personalavatar"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"

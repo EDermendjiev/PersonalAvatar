@@ -1,7 +1,8 @@
-# Fly.io config — ROOT copy, used by the web dashboard / GitHub-integration build
-# and a bare `fly deploy`. (The CLI script scripts/deploy.sh uses its own copy at
-# scripts/fly.toml via --config; that one targets a fresh `avatar-emil` app in
-# `fra`. This root copy matches the app you launched from the dashboard.)
+# Fly.io config — ROOT copy, used by the GitHub Actions workflow, the web
+# dashboard, and a bare `fly deploy`. scripts/fly.toml is an equivalent copy used
+# by the CLI script scripts/deploy.sh (via --config). Both now target the SAME
+# app (personalavatar) in fra, so the Actions, dashboard, and CLI paths all
+# deploy to one place — keep the two files in sync.
 #
 # It replaces the auto-generated config Fly Launch created, whose `internal_port`
 # was 8080 while the container listens on 8000 -> "instance refused connection".

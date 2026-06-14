@@ -1,6 +1,6 @@
 # Fly.io config for the Avatar app. Deploy with scripts/deploy.sh.
 # Keep `app` here in sync with APP="..." in scripts/deploy.sh.
-app = "avatar-emil"
+app = "personalavatar"
 primary_region = "fra"               # closest Fly region to the Supabase eu-central-1 (Frankfurt) DB
 
 [env]
