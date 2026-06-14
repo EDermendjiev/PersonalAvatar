@@ -21,7 +21,7 @@ SPEC traceability: each section header cites the SPEC and CONTRACT clauses it ve
 - [x] `config.py` loads `.env` from the **project root** via `Path(__file__).resolve().parents[2] / ".env"` with `override=True`.
 - [x] `OPENROUTER_API_KEY`, `ADMIN_PASSWORD`, `SUPABASE_URL`, `SUPABASE_KEY` are exposed as module constants.
 - [x] `MODEL` defaults to `openai/gpt-5.4-nano` when unset in the environment.
-- [x] `OWNER_NAME` falls back to `Ed Donner` when unset, and reflects `Emil Dermendzhiev` (or whatever is in `.env`) when set — never hardcoded elsewhere in shipped code.
+- [x] `OWNER_NAME` falls back to `Emil Dermendzhiev` when unset, and reflects `Emil Dermendzhiev` (or whatever is in `.env`) when set — never hardcoded elsewhere in shipped code.
 - [x] `SESSION_SECRET` falls back to `avatar::{ADMIN_PASSWORD}` when unset, and uses the explicit value when set.
 - [x] `COOKIE_SECURE` parses `"1"` as secure-cookie on; unset/`"0"` as off.
 - [x] `PUSHOVER_USER` / `PUSHOVER_TOKEN` are optional (absence does not raise at import time).

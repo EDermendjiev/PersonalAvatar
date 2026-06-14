@@ -33,7 +33,7 @@ integrates, installs, builds, and runs. Light static checks (`python -m py_compi
 |---|---|---|
 | `OPENROUTER_API_KEY` | LLM key (OpenRouter) | required (no default) |
 | `MODEL` | OpenRouter model id (`openai/...`) | `openai/gpt-5.4-nano` |
-| `OWNER_NAME` | person the twin represents | `Ed Donner` (fallback) — runtime sets `Emil Dermendzhiev` |
+| `OWNER_NAME` | person the twin represents | `Emil Dermendzhiev` (config default; always set in `.env`) |
 | `ADMIN_PASSWORD` | admin login password | required |
 | `PUSHOVER_USER`, `PUSHOVER_TOKEN` | Pushover creds | optional (push tool no-ops gracefully if unset) |
 | `SUPABASE_URL`, `SUPABASE_KEY` | Supabase (secret key) | required |

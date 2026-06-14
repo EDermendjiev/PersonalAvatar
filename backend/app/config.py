@@ -54,7 +54,7 @@ def _get_int(name: str, default: int) -> int:
 MAX_OUTPUT_TOKENS: int = _get_int("MAX_OUTPUT_TOKENS", 8000)
 
 # --- Identity ---------------------------------------------------------------
-OWNER_NAME: str = _get("OWNER_NAME", "Ed Donner") or "Ed Donner"
+OWNER_NAME: str = _get("OWNER_NAME", "Emil Dermendzhiev") or "Emil Dermendzhiev"
 
 # --- Admin auth -------------------------------------------------------------
 ADMIN_PASSWORD: str = _get("ADMIN_PASSWORD", "") or ""

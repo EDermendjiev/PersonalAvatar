@@ -117,7 +117,7 @@ The frontend is vanilla TypeScript + Vite (per SPEC). Copy `tokens.css`, `compon
 
 - The design system says "no left-edge accent bars," yet `.convo-item.is-active::before` in `components.css` draws a small left bar on the *active admin inbox row*. This is acceptable: that rule is about message/content panels (and is honoured on the human bubble); the inbox bar is a selection indicator. Follow the mockups.
 - Treat the shipped PNGs in `assets/` as the source of truth for the avatar images rather than re-deriving them. The `avatar-robot*.png` files resolve the earlier open question about providing the robotic icon.
-- **Owner-specific regeneration:** these assets, copy, and identity are currently built for the default owner (Ed). If someone *other than Ed* stands up their own site, the build must be updated end to end for that person - including regenerating the Avatar images from their own `knowledge/pic.jpg` (per the recipe in `design-system/docs/avatar-generation.md`), and updating the human photo, brand subtitle, and any owner-specific copy. The owner's name comes from the `OWNER_NAME` env var and is shown in the UI (including the human bubble, e.g. "Ed Donner - live"); it must always be read from that config and never hardcoded (per Q&A #4 and #11).
+- **Owner-specific regeneration:** these assets, copy, and identity are currently built for the default owner (Ed). If someone *other than Ed* stands up their own site, the build must be updated end to end for that person - including regenerating the Avatar images from their own `knowledge/pic.jpg` (per the recipe in `design-system/docs/avatar-generation.md`), and updating the human photo, brand subtitle, and any owner-specific copy. The owner's name comes from the `OWNER_NAME` env var and is shown in the UI (including the human bubble, e.g. "Emil Dermendzhiev - live"); it must always be read from that config and never hardcoded (per Q&A #4 and #11).
 
 ## Testing
 
@@ -163,7 +163,7 @@ Clarifications agreed before starting work:
 
 4. **Human-in-the-loop semantics.** When the human posts from admin, the Avatar does NOT react to it. The human's message is inserted into the thread; the full conversation (including it) is provided to the Avatar the next time the visitor submits something. To the visitor, the human's message renders as a separate bubble using the profile pic, distinguished by image + yellow ring + tint + glow (per the design system).
 
-   **Owner name (updated).** The owner's name comes from the `OWNER_NAME` env var (see #11) and IS shown in the UI, including on the human's bubble (e.g. "Ed Donner - live") to avoid an awkward anonymous bubble. The name must always be read from `OWNER_NAME` config and NEVER hardcoded, so students building their own site simply set their own value.
+   **Owner name (updated).** The owner's name comes from the `OWNER_NAME` env var (see #11) and IS shown in the UI, including on the human's bubble (e.g. "Emil Dermendzhiev - live") to avoid an awkward anonymous bubble. The name must always be read from `OWNER_NAME` config and NEVER hardcoded, so students building their own site simply set their own value.
 
 5. **Needs-human + read/unread state.** Persist these as fields on each message row in the conversation table: a `needs_attention` flag (set when `push_tool` fires) and an unread / read marker. Both cleared/updated when the human opens the thread in admin.
 
@@ -177,6 +177,6 @@ Clarifications agreed before starting work:
 
 10. **Contact capture.** Keep the behavior from `context.py`: when a visitor wants to get in touch, the twin asks for their email and pushes it to the human via Pushover.
 
-11. **Owner name configuration.** `OWNER_NAME` in `.env` holds the name of the person the twin represents. It is shown in the site header/subtitle, the page title, how the Avatar refers to itself, and on the human's messages when the owner joins from admin (e.g. "Ed Donner - live"). Always sourced from config, never hardcoded - each owner sets their own.
+11. **Owner name configuration.** `OWNER_NAME` in `.env` holds the name of the person the twin represents. It is shown in the site header/subtitle, the page title, how the Avatar refers to itself, and on the human's messages when the owner joins from admin (e.g. "Emil Dermendzhiev - live"). Always sourced from config, never hardcoded - each owner sets their own.
 
 12. **Abuse guards.** Two cheap protections for the OpenRouter key are enforced in the backend, with no configuration: (a) a visitor message longer than 20,000 characters is truncated to 20,000 and a note is appended before it is stored or sent to the LLM; (b) each `conversation_id` is limited to 20 chat messages per minute (a moving-window limiter from the `limits` package, in-memory per process), returning HTTP 429 before any LLM call. No overall/global limit is added because OpenRouter already caps total spend.

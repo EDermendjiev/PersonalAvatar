@@ -25,7 +25,7 @@ each section header.
 
 - [x] Visitor page fetches `GET /api/config` and renders `owner_name` in the header/subtitle, the page `<title>`, and the twin's name — never hardcoded.
 - [x] Admin page reads `owner_name` from `GET /api/admin/me` and shows it (e.g. "Reply as {OWNER_NAME}").
-- [x] No literal "Ed Donner" or other owner name appears in shipped frontend source.
+- [x] No literal "Emil Dermendzhiev" or other owner name appears in shipped frontend source.
 
 ## 3. Visitor — message bubble roles (SKILL acceptance; ux-flows roles table)
 

@@ -17,7 +17,7 @@ All secrets live in a single `.env` file in the project root. By the end of this
 ```
 OPENROUTER_API_KEY=sk-or-v1-...
 MODEL=openai/gpt-5.4-nano
-OWNER_NAME=Ed Donner
+OWNER_NAME=Emil Dermendzhiev
 ADMIN_PASSWORD=your-chosen-admin-password
 PUSHOVER_USER=...
 PUSHOVER_TOKEN=...
@@ -27,7 +27,7 @@ SESSION_SECRET=a-long-random-string
 COOKIE_SECURE=0
 ```
 
-`OWNER_NAME` is the name of the person this Digital Twin represents (you). It is shown in the UI - the site header/subtitle, the page title, how the Avatar refers to itself, and on your own messages when you join a conversation from admin (e.g. "Ed Donner - live"). Set it to how you want your name to appear. It is configuration, never hardcoded, so each owner sets their own.
+`OWNER_NAME` is the name of the person this Digital Twin represents (you). It is shown in the UI - the site header/subtitle, the page title, how the Avatar refers to itself, and on your own messages when you join a conversation from admin (e.g. "Emil Dermendzhiev - live"). Set it to how you want your name to appear. It is configuration, never hardcoded, so each owner sets their own.
 
 `SESSION_SECRET` signs the admin session cookie. It is optional locally - if unset, it is derived from `ADMIN_PASSWORD` - but set it to a long random value (e.g. run `openssl rand -hex 32`) so that changing your admin password later does not invalidate live admin sessions. `COOKIE_SECURE` gates whether that cookie requires HTTPS: leave it `0` (or unset) for local http; it is set to `1` automatically in production (see [Deploy to fly.io](#deploy-to-flyio)).
 

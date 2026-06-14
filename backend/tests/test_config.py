@@ -52,7 +52,7 @@ def _restore_config():
 def test_defaults_applied(monkeypatch):
     cfg = _reload_config_with(monkeypatch, {"ADMIN_PASSWORD": "pw"})
     assert cfg.MODEL == "openai/gpt-5.4-nano"
-    assert cfg.OWNER_NAME == "Ed Donner"  # contract fallback
+    assert cfg.OWNER_NAME == "Emil Dermendzhiev"  # contract fallback
     assert cfg.OPENROUTER_BASE_URL == "https://openrouter.ai/api/v1"
     assert cfg.COOKIE_SECURE is False
     assert cfg.MAX_MESSAGE_CHARS == 20_000
@@ -98,7 +98,7 @@ def test_blank_values_treated_as_unset(monkeypatch):
         monkeypatch,
         {"ADMIN_PASSWORD": "pw", "OWNER_NAME": "   ", "MODEL": ""},
     )
-    assert cfg.OWNER_NAME == "Ed Donner"
+    assert cfg.OWNER_NAME == "Emil Dermendzhiev"
     assert cfg.MODEL == "openai/gpt-5.4-nano"
 
 
