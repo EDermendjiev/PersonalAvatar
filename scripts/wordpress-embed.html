@@ -1,0 +1,72 @@
+<!--
+  Avatar — WordPress embed snippet.
+  Paste this into a WordPress "Custom HTML" block (or any page that accepts raw HTML).
+  It renders the Avatar app full-bleed just below the site nav, overrides the theme's
+  content-column max-width for this block, guards against horizontal overflow on narrow
+  screens, and forwards any ?q=N from the host page's URL into the iframe so a link like
+  https://yourdomain.com/avatar?q=2 answers Q2 inside the embed on arrival.
+
+  Change two things for your own site:
+    1) BASE   — your app's subdomain (e.g. https://avatar-emil.fly.dev or https://avatar.epsystems.org)
+    2) title  — your own name on the <iframe> (accessibility / SEO)
+
+  Why a subdomain of your own site is best: a same-registrable-domain subdomain
+  (e.g. avatar.epsystems.org) keeps the "Keep chat" cookie first-party so persistence
+  works inside the iframe. The plain *.fly.dev URL works too, but its cookie is treated
+  as third-party in a cross-site iframe and may be blocked. See DEPLOY.md §7.
+-->
+<style>
+  /* Full-bleed: break out of the theme's centered content column. */
+  .avatar-embed {
+    position: relative;
+    left: 50%;
+    right: 50%;
+    width: 100vw;
+    max-width: 100vw;           /* override any content-column max-width */
+    margin-left: -50vw;
+    margin-right: -50vw;
+    /* Tune this to sit the frame just below your site's fixed/sticky nav.
+       For a 64px-tall nav, use calc(100vh - 64px). */
+    height: calc(100vh - 80px);
+    min-height: 560px;
+    border: 0;
+    overflow: hidden;           /* overflow-x guard on narrow screens */
+  }
+  .avatar-embed iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  /* Keep the page itself from scrolling sideways when full-bleed. */
+  html, body { overflow-x: hidden; }
+</style>
+
+<div class="avatar-embed">
+  <iframe
+    id="avatar-frame"
+    title="Emil Dermendzhiev — Digital Twin"
+    src="about:blank"
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    allow="clipboard-write"></iframe>
+</div>
+
+<script>
+  (function () {
+    // 1) Your app's base URL — change to your subdomain.
+    var BASE = "https://avatar-emil.fly.dev";
+
+    // 2) Forward ?q=N from the host page URL into the iframe (single-question deep link).
+    var hostQ = new URLSearchParams(window.location.search).get("q");
+    var src = BASE + "/";
+    if (hostQ && /^\d+$/.test(hostQ)) {
+      src += "?q=" + encodeURIComponent(hostQ);
+    }
+
+    var frame = document.getElementById("avatar-frame");
+    if (frame) {
+      frame.src = src;
+    }
+  })();
+</script>

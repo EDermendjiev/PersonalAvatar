@@ -218,3 +218,17 @@ __marimo__/
 .streamlit/secrets.toml
 
 .DS_Store
+
+# Node / Vite (frontend) — dependencies are installed and the bundle is built;
+# neither is committed (`dist/` is already ignored above via the Python rule).
+node_modules/
+frontend/.vite/
+*.tsbuildinfo
+
+# Playwright MCP run output (snapshots, console logs, saved screenshots)
+.playwright-mcp/
+
+# Test screenshots captured during E2E runs (deleted after each run)
+/visitor-*.png
+/admin-*.png
+/e2e-*.png

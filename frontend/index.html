@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="description" content="Chat with the AI digital twin." />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <!-- Set the theme before first paint to avoid a flash of the wrong theme. -->
+  <script>
+    document.documentElement.setAttribute(
+      'data-theme',
+      localStorage.getItem('avatar-theme') || 'dark'
+    );
+  </script>
+  <title>Avatar</title>
+  <link rel="stylesheet" href="./src/styles/tokens.css" />
+  <link rel="stylesheet" href="./src/styles/components.css" />
+  <link rel="stylesheet" href="./src/styles/visitor.css" />
+</head>
+<body>
+  <div class="app" id="app" data-screen-label="Visitor Chat">
+
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand__mark">
+          <svg class="icon"><use href="/icons.svg#i-cpu" /></svg>
+        </div>
+        <div class="brand__txt">
+          <div class="brand__title">Avatar</div>
+          <div class="brand__sub" id="brand-sub">Digital Twin</div>
+        </div>
+      </div>
+      <div class="header-controls">
+        <input
+          class="field name-field"
+          id="name-field"
+          type="text"
+          placeholder="Your name"
+          autocomplete="off"
+          aria-label="Your first name or initials"
+          maxlength="40"
+        />
+        <label class="switch" title="Keep this chat on this device">
+          <input type="checkbox" id="keep-chat" checked />
+          <span class="switch__track"></span>
+          <span class="switch__label">Keep chat</span>
+        </label>
+        <button class="btn btn--ghost btn--icon btn--sm" id="reset" title="Reset chat" aria-label="Reset chat">
+          <svg class="icon"><use href="/icons.svg#i-reset" /></svg>
+        </button>
+        <button class="btn btn--ghost btn--icon btn--sm theme-toggle" id="theme" title="Toggle theme" aria-label="Toggle theme">
+          <svg class="icon i-moon-show"><use href="/icons.svg#i-moon" /></svg>
+          <svg class="icon i-sun-show"><use href="/icons.svg#i-sun" /></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="thread" id="thread" aria-live="polite" aria-label="Conversation"></main>
+
+    <div class="dock">
+      <div class="composer">
+        <textarea
+          class="composer__input"
+          id="input"
+          rows="1"
+          placeholder="Ask about the work, stack, projects… or type Q1–Q7"
+          aria-label="Message"
+        ></textarea>
+        <button class="composer__send" id="send" title="Send" aria-label="Send">
+          <svg class="icon"><use href="/icons.svg#i-send" /></svg>
+        </button>
+      </div>
+      <div class="dock__row">
+        <span class="composer__hint">Enter to send · Shift+Enter for a new line</span>
+        <div class="footer-links" id="footer-links">
+          <a id="link-linkedin" href="https://www.linkedin.com/in/emildermendzhiev-7a249a244" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon--sm"><use href="/icons.svg#i-linkedin" /></svg><span class="label">LinkedIn</span>
+          </a>
+          <a id="link-website" href="https://epsystems.org" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon--sm"><use href="/icons.svg#i-link" /></svg><span class="label">Website</span>
+          </a>
+          <a id="link-mail" href="mailto:emildermendjiev9@gmail.com">
+            <svg class="icon icon--sm"><use href="/icons.svg#i-mail" /></svg><span class="label">Email</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/visitor.ts"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+# Keep the build context small and never bake secrets into the image.
+
+# Secrets — passed at runtime, never copied in.
+.env
+.env.*
+!.env.example
+
+# Version control / IDE / OS cruft
+.git
+.gitignore
+.gitattributes
+.github
+.idea
+.vscode
+.DS_Store
+Thumbs.db
+
+# Python build/runtime artifacts (deps installed fresh via uv)
+**/__pycache__/
+**/*.py[codz]
+**/*$py.class
+.venv
+**/.venv
+backend/.venv
+**/.pytest_cache/
+**/.ruff_cache/
+**/.mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Node / Vite — installed and built inside the image
+**/node_modules/
+frontend/dist
+frontend/.vite
+**/*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Tests, plans, docs and screenshots (not needed in the runtime image)
+test/
+**/test-results/
+**/playwright-report/
+**/*.png.tmp
+**/screenshots/
+*.log
+
+# Source material not needed at runtime
+reference/
+design-system/
+DEPLOY.md
+SPEC.md
+CONTRACT.md
+CLAUDE.md
+README.md
+LICENSE

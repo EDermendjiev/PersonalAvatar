@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <script>
+    document.documentElement.setAttribute(
+      'data-theme',
+      localStorage.getItem('avatar-theme') || 'dark'
+    );
+  </script>
+  <title>Avatar — Admin</title>
+  <link rel="stylesheet" href="./src/styles/tokens.css" />
+  <link rel="stylesheet" href="./src/styles/components.css" />
+  <link rel="stylesheet" href="./src/styles/admin.css" />
+</head>
+<body>
+  <!-- Login gate. Shown until a valid session is confirmed via GET /api/admin/me -->
+  <div class="login-screen" id="login-screen" hidden>
+    <form class="card login-card" id="login-form" autocomplete="off">
+      <div class="login-card__brand">
+        <span class="mk"><svg class="icon"><use href="/icons.svg#i-cpu" /></svg></span>
+        <div>
+          <div class="login-card__title">Avatar</div>
+          <div class="login-card__sub">Admin dashboard</div>
+        </div>
+      </div>
+      <label class="field-label" for="password">Password</label>
+      <input class="field" id="password" type="password" placeholder="Enter admin password" autocomplete="current-password" />
+      <p class="login-error" id="login-error" hidden>That password didn't work. Try again.</p>
+      <button class="btn btn--primary login-submit" type="submit" id="login-submit">
+        <svg class="icon"><use href="/icons.svg#i-lock" /></svg>Unlock
+      </button>
+    </form>
+  </div>
+
+  <!-- Dashboard. Hidden until authenticated. -->
+  <div class="admin" id="admin" hidden data-screen-label="Admin Dashboard">
+
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__head">
+        <div class="sidebar__title-row">
+          <div class="sidebar__brand">
+            <span class="mk"><svg class="icon icon--sm"><use href="/icons.svg#i-cpu" /></svg></span>
+            <b>Avatar</b>
+          </div>
+          <button class="btn btn--ghost btn--icon btn--sm theme-toggle" id="theme" title="Toggle theme" aria-label="Toggle theme">
+            <svg class="icon i-moon-show"><use href="/icons.svg#i-moon" /></svg>
+            <svg class="icon i-sun-show"><use href="/icons.svg#i-sun" /></svg>
+          </button>
+          <button class="btn btn--ghost btn--icon btn--sm" id="logout" title="Log out" aria-label="Log out">
+            <svg class="icon"><use href="/icons.svg#i-lock" /></svg>
+          </button>
+        </div>
+        <div class="inbox-label">
+          <span class="eyebrow"><svg class="icon icon--sm"><use href="/icons.svg#i-message" /></svg>Inbox</span>
+          <span class="badge badge--blue" id="unread-badge" hidden>0 unread</span>
+        </div>
+        <div class="search-wrap">
+          <svg class="icon icon--sm"><use href="/icons.svg#i-search" /></svg>
+          <input class="field" id="search" type="text" placeholder="Search conversations" autocomplete="off" />
+        </div>
+      </div>
+      <div class="inbox" id="inbox"></div>
+    </aside>
+
+    <section class="panel" id="panel">
+      <header class="panel__head" id="panel-head" hidden>
+        <button class="btn btn--ghost btn--icon btn--sm panel__back" id="panel-back" title="Back to inbox" aria-label="Back to inbox">
+          <svg class="icon"><use href="/icons.svg#i-back" /></svg>
+        </button>
+        <div class="avatar avatar--sm avatar--visitor" id="panel-avatar">·</div>
+        <div class="panel__who">
+          <div class="panel__name" id="panel-name">Conversation</div>
+          <div class="panel__meta" id="panel-meta"></div>
+        </div>
+        <span class="panel__id" id="panel-id"></span>
+        <div class="panel__head-actions">
+          <span class="badge" id="panel-status"><span class="status-dot status-dot--live"></span>read</span>
+        </div>
+      </header>
+
+      <div class="panel__thread" id="panel-thread" hidden></div>
+
+      <div class="panel__empty" id="panel-empty">
+        <svg class="icon icon--lg"><use href="/icons.svg#i-message" /></svg>
+        <p>Select a conversation from the inbox to read the full thread.</p>
+      </div>
+
+      <div class="panel__dock" id="panel-dock" hidden>
+        <div class="composer">
+          <textarea class="composer__input" id="reply-input" rows="1" placeholder="Reply…" aria-label="Reply"></textarea>
+          <button class="composer__send" id="reply-send" title="Send" aria-label="Send reply">
+            <svg class="icon"><use href="/icons.svg#i-send" /></svg>
+          </button>
+        </div>
+        <div class="kbd-hints">
+          <span class="as-me" id="as-me">Posting as owner</span>
+          <span class="kbd-hint"><span class="kbd">↑</span><span class="kbd">↓</span> switch conversation</span>
+          <span class="kbd-hint"><span class="kbd">Enter</span> send</span>
+          <span class="kbd-hint"><span class="kbd">Shift</span>+<span class="kbd">Enter</span> new line</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script type="module" src="./src/admin.ts"></script>
+</body>
+</html>

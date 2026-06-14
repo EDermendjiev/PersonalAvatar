@@ -1,58 +1,118 @@
-# Component Reference
+# Components reference
 
-Every class lives in `components.css` and is themed by `tokens.css`. Markup examples are lifted
-from the mockups — copy them verbatim and swap content.
+Every class ships in `components.css` and depends on `tokens.css`. The mockups are composed
+entirely from these. Sizes/colors below reference tokens — see `tokens.css` for values.
 
-## Buttons — `.btn`
-Modifiers: `--primary` (purple, **submit/primary only**), `--blue` (key secondary), `--secondary`
-(outline), `--ghost` (quiet), `--icon`, `--sm`, `--lg`. Plus `.btn-send` (the 44px purple send
-button). Focus ring is yellow.
+---
+
+## Icons
+
 ```html
-<button class="btn btn--primary"><svg class="icon icon--sm"><use href="#i-send"/></svg> Submit</button>
-<button class="btn-send"><svg class="icon"><use href="#i-send"/></svg></button>
+<svg class="icon"><use href="icons.svg#i-send"/></svg>
 ```
 
-## Fields
-`.input`, `.textarea`, `.name-field` (compact inline name/initials field), `.label`. Focus →
-yellow ring (`--focus-ring`).
+- `.icon` (1.25em), `.icon--sm` (1em), `.icon--lg` (1.5em). Inherits `currentColor`.
+- Sprite ids: `i-send i-reset i-sun i-moon i-back i-chevron-right i-chevron-down i-check
+  i-check-check i-bell i-bell-dot i-user i-bot i-cpu i-sparkles i-arrow-ur i-link i-linkedin
+  i-youtube i-mail i-search i-x i-menu i-lock i-message i-zap i-dot i-copy i-keyboard i-radio
+  i-arrow-keys`.
 
-## Switch — `.switch` (Keep chat)
+## Buttons
+
+| Class | Use |
+|---|---|
+| `.btn` | Base (secondary look). 44px tall. |
+| `.btn--primary` | The **one purple action** (submit/send). |
+| `.btn--ghost` | Transparent; toolbar / icon actions. |
+| `.btn--icon` | Square 44px; pair with `.btn--sm` for 36px. |
+| `.btn--sm` | Compact 36px. |
+
+Hover lightens the surface; `:active` nudges 1px. Focus shows a blue outline.
+
+## Fields & composer
+
+- `.field` — input/textarea base. `textarea.field` auto-pads. Focus = blue border + soft ring.
+- `.field-label` — block label.
+- `.name-field` — compact pill name input for the visitor header.
+- `.composer` — the dock: `.composer__input` (auto-sizing textarea) + `.composer__send` (purple,
+  44px). `.composer__hint` for the "Enter to send" line.
+
+## Keep-chat switch
+
 ```html
 <label class="switch">
   <input type="checkbox" checked>
-  <span class="track"><span class="thumb"></span></span>
-  <span class="switch-label">Keep chat</span>
+  <span class="switch__track"></span>
+  <span class="switch__label">Keep chat</span>
 </label>
 ```
-On = blue track + blue thumb.
+On = blue track, knob slides right.
 
 ## Badges & status
-`.badge` (+ `--attention` yellow, `--blue`, `--unread`, `--dot`, `.badge--dot.is-attention`),
-`.chip`, `.kbd` (keyboard key), `.instant-tag` (Qn), `.tool-status` (+ `.is-done`).
+
+- `.badge` + `.badge--blue` / `--cyan` / `--yellow` (role-tinted). Non-wrapping.
+- `.status-dot` + `.status-dot--live` (green, haloed).
+- `.qn-tag` — the mono `Qn` instant-answer pill (cyan).
+- `.prompt-chip` — clickable example prompt on the intro screen.
 
 ## Avatars
-- `.avatar` (+ `--sm` 30, `--lg` 56) — round image holder; set `background-image`.
-- `.avatar-initials` — visitor's blue initials token (square, mono).
-- `.avatar-twin` — cyan ring for the Avatar. Use `avatar-robot-round.png`.
-- `.avatar-human` — yellow ring + `.spark-badge` for the live human. Use `avatar-human.png`.
 
-## Message bubbles — `.msg`
-Wrapper `.msg` + role modifier, containing the avatar element and `.msg-body`
-(`.msg-meta` → `.msg-name` / `.msg-time` / tags, then `.bubble`).
-- `.msg--visitor` — right aligned, initials token, neutral bubble.
-- `.msg--avatar` — left, twin avatar, name "Avatar", `.tool-status` rows allowed above the bubble.
-- `.msg--human` — left, human avatar, **name-free** `.human-tag` ("The human · live"), tinted +
-  glowing bubble. No left-edge bar — the distinction is ring + tint + glow.
+- `.avatar` (40px round) + `.avatar--sm` (30) / `.avatar--lg` (56).
+- `.avatar--visitor` — blue initials chip (no image).
+- `.avatar--twin` — cyan ring; holds `avatar-robot-round.png`.
+- `.avatar--owner` — **yellow ring + glow**; holds `avatar-human.png`. Marks the human.
 
-## Composer — `.composer`
-Flex row: `<textarea>` + `.btn-send`. Auto-grows; focus-within → yellow ring. Always re-focus the
-textarea after send.
+## Message bubbles
 
-## Inbox row — `.convo-item`
-Grid: avatar / `.convo-main` (`.convo-top > .convo-name`, `.convo-preview`) / `.convo-side`
-(time + badge). State classes: `.is-unread`, `.is-attention`, `.is-active`. Names truncate with
-ellipsis; previews are single-line.
+```html
+<div class="msg msg--avatar">
+  <div class="avatar avatar--sm avatar--twin"><img src="assets/avatar-robot-round.png" alt="Avatar"></div>
+  <div class="msg__col">
+    <div class="msg__meta"><span class="msg__name">Avatar</span><span class="msg__time">14:05</span></div>
+    <div class="msg__bubble">…markdown-rendered content…</div>
+  </div>
+</div>
+```
 
-## Surfaces & utilities
-`.card`, `.hairline`, `.eyebrow` (mono caps label), `.display` (serif), `.hud-grid` (decorative
-technical grid background), `.scroll` (themed scrollbar).
+| Modifier | Role | Treatment |
+|---|---|---|
+| `.msg--visitor` | visitor | right-aligned, blue tint, bottom-right corner squared |
+| `.msg--avatar` | twin | left-aligned, cyan name, bottom-left corner squared |
+| `.msg--human` | owner | left-aligned, **yellow ring + tint + glow**, `.live-tag` "live" |
+
+Bubbles are asymmetric (one corner squared toward the avatar) — deliberately not generic pills.
+No left-edge accent bars. `.msg__bubble a` underlines links.
+
+## Tool-status lines
+
+- `.tool-line` — small mono, dashed border, cyan icon (default / faq).
+- `.tool-line--push` — yellow icon (the human was notified).
+- `.tool-line--done` — green icon.
+- `.typing` — three-dot indicator for "Avatar is composing".
+
+## Inbox rows (admin)
+
+```html
+<div class="convo-item is-unread needs-attention">
+  <div class="avatar avatar--sm avatar--visitor">EK</div>
+  <div class="convo-item__main">
+    <div class="convo-item__top"><span class="convo-item__name">EK</span><span class="convo-item__time">14:08</span></div>
+    <div class="convo-item__preview">…last message…</div>
+  </div>
+  <div class="convo-item__flags"><span class="attn-flag"><svg class="icon icon--sm"><use href="icons.svg#i-bell-dot"/></svg></span></div>
+</div>
+```
+
+| State class | Meaning |
+|---|---|
+| `.is-active` | selected — 3px blue selection bar (sanctioned) |
+| `.is-unread` | stronger text; pair with `.unread-dot` in flags |
+| `.needs-attention` | yellow-tinted row; pair with `.attn-flag` + `#i-bell-dot` |
+
+## Surfaces & misc
+
+- `.card` — bordered surface container.
+- `.divider` — 1px hairline rule.
+- `.has-grid` — applies the canvas grid texture (`--grid-mark`) to any element.
+- `.theme-toggle` — wraps sun/moon `<use>`s; the active glyph is shown per `[data-theme]`
+  (`.i-sun-show` / `.i-moon-show`).

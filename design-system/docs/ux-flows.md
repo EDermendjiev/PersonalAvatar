@@ -1,81 +1,123 @@
-# UX Flows & Interaction Contracts
+# UX flows & states
 
-The parts of Avatar that don't show up in a screenshot. Pair with `SPEC.md` for backend behaviour.
-
----
-
-## A. Visitor — first visit
-
-1. Page loads → composer **autofocuses**. Editorial hero + 2–3 suggestion chips are visible above
-   an empty thread.
-2. Browser mints a `conversation_id` (UUID). With **Keep chat** on (default), it is written to a
-   cookie so the thread survives refreshes.
-3. Visitor sends a message → renders as `.msg--visitor` (initials token). Composer clears and
-   **re-focuses**.
-
-## B. Visitor — returning (Keep chat on)
-
-1. On load, read `conversation_id` from cookie.
-2. Call the backend for the existing thread; render all prior messages in order.
-3. Resume polling (§E) and scroll to the latest message.
-
-`Reset` clears the visible thread and issues a **new** `conversation_id` (old thread stays in the
-DB, just detached from this browser).
-
-## C. Avatar reply (streaming)
-
-1. Visitor submits → optimistic visitor bubble appears.
-2. Backend runs the Agent (OpenAI Agents SDK via OpenRouter) and **streams** the reply over SSE.
-3. Tool activity renders live as `.tool-status` rows in small mono, e.g.
-   `Calling faq_tool…` → on return collapse to the `.is-done` state `faq_tool · curriculum`.
-4. Text streams token-by-token into the `.bubble`.
-5. On completion the **composer re-focuses**. (Hard requirement.)
-
-States to render: `thinking` · `tool-calling` · `tool-returned` · `typing` · `complete`.
-
-## D. Qn instant answer (no model call)
-
-- If `message.trim()` matches `^q\d{1,2}$` (case-insensitive), look the FAQ up by number and return
-  its answer **directly** — no Agent run.
-- Tag the reply `.instant-tag` → "instant · Q2". Still persist both the user line and the answer to
-  the thread so history is complete.
-
-## E. Polling for the human
-
-- Poll the backend for new messages every **10 seconds**.
-- After **5 minutes** with no new activity, ease the interval to **60 seconds**.
-- Resume the fast 10s cadence as soon as the visitor sends again.
-- New `human` messages arriving via poll render as `.msg--human` (§ roles) — the designed moment.
-
-## F. Contact capture → human-in-the-loop
-
-1. Visitor expresses intent to reach the owner (or the Avatar can't answer).
-2. Avatar asks for an email, then calls `push_tool` (Pushover) to notify the human, and tells the
-   visitor in-chat that it has done so.
-3. That message row is flagged `needs_attention = true`, `read = false`.
-4. In `/admin` the thread glows yellow + "Needs you" and sorts to attention.
-5. Owner replies from admin → inserted as the **human** role. **The Avatar does not react to it.**
-6. The visitor's polling surfaces the human bubble.
-
-## G. Admin — triage loop
-
-1. `/admin` → password gate (`POST /admin/login`, httpOnly session cookie).
-2. Inbox lists conversations, most-recent first, with read / unread / needs-you states.
-3. `↑` / `↓` move the selection between threads; selecting one loads the full conversation **and
-   clears its unread + needs_attention flags**.
-4. Owner types a reply; `Enter` sends, `Shift+Enter` adds a line. The "posting as you" note makes
-   clear the visitor sees only the photo, no name.
-5. "Mark resolved" clears the attention flag without replying.
+The behaviour contract is owned by `SPEC.md`. This file translates it into the design/QA target:
+each flow, plus a states matrix to build and test against. Where a detail is visual (color,
+spacing, which token), `components.css` and the mockups are authoritative.
 
 ---
 
-## States matrix (design + test every cell)
+## Roles & color (the mental model)
 
-| Surface | States |
-|---|---|
-| Conversation row | read · unread · needs-you · active · hover |
-| Message | visitor · avatar · avatar+tool · avatar+instant(Qn) · human |
-| Composer | empty(focused) · typing · sending · disabled |
-| Stream | thinking · tool-calling · tool-returned · typing · complete |
-| Session | fresh · restored-from-cookie · reset |
-| Admin auth | logged-out (gate) · logging-in · error · logged-in |
+| Role | Who | Color | Token | Avatar |
+|---|---|---|---|---|
+| Visitor | the person on the site | blue | `--role-visitor` | initials chip (`.avatar--visitor`) |
+| Avatar | the AI digital twin | cyan | `--role-avatar` | `avatar-robot-round.png` (`.avatar--twin`) |
+| Human | the owner, live | yellow | `--role-human` | `avatar-human.png` (`.avatar--owner`, ring + glow) |
+
+The visitor never sees the admin. The owner sees everything. The Avatar never reacts to the
+human's messages — they're just added to the thread and included next time the visitor submits
+(per SPEC Q&A #4).
+
+---
+
+## Visitor Chat (`/`)
+
+### Arrival
+- A `conversation_id` (UUID) is assigned. If **Keep chat** is on (default), the browser reuses
+  the id from its cookie and the server returns the thread so far.
+- The composer **takes focus on load** (`input.focus({preventScroll:true})` — `preventScroll`
+  matters when the app is embedded in an iframe).
+- **Empty state:** intro copy + a few `.prompt-chip` examples. Clicking a chip submits it
+  immediately.
+
+### Header controls
+- **Name field** — optional first name / initials; seeds the visitor's `.avatar--visitor` chip.
+- **Keep chat** switch (`.switch`) — defaults **on**. Off → no cookie persistence.
+- **Reset** (`.btn--icon`, `#i-reset`) — clears the thread and assigns a fresh `conversation_id`.
+- **Theme toggle** — sun/moon; persists to `localStorage['avatar-theme']`.
+
+### Sending
+- **Enter** sends; **Shift+Enter** is a newline. After send, the composer **regains focus**.
+- The Avatar's reply **streams via SSE**. While tools run, a small mono `.tool-line` shows the
+  call (e.g. `faq_tool · "automation"`); then the `.msg__bubble` fills in. A `.typing` indicator
+  may precede the first token.
+- `push_tool` renders as `.tool-line--push` (yellow bell): the Avatar has notified the owner.
+  The bubble should say so in words too.
+
+### `Qn` instant answers
+- A bare `Qn` (e.g. `Q2`) returns FAQ #n with **no LLM call**. The visitor turn shows a `.qn-tag`;
+  the reply **restates the question** then answers (`**Q2:** …question… / …answer…`).
+- Deep link `?q=N` opens the page and immediately submits `Qn`, then clears the param from the URL.
+
+### Human joins
+- When the owner posts from admin, it appears as a **separate** `.msg--human` bubble: the owner's
+  photo with a **yellow ring**, a faint **yellow tint** background, a soft **glow**, and the label
+  "`OWNER_NAME` — live". The Avatar does not respond to it.
+- The page **polls** every 10s for the human's async messages, backing off to every 60s after 5
+  minutes of no activity. (Polling is only for picking up human messages; the Avatar reply itself
+  streams.)
+
+### Guardrails (visible)
+- Message > 20,000 chars is truncated server-side (a note is appended) before storing/sending.
+- > 20 messages/min on one conversation → HTTP 429 **before** any LLM call; show a friendly
+  "you're sending messages too quickly" line in the thread.
+
+### Responsive
+- Single column, `max-width: var(--maxw-chat)`, composer docked at the bottom. The brand subtitle
+  and footer link labels hide on narrow screens.
+
+---
+
+## Admin Dashboard (`/admin`)
+
+### Auth
+- `POST /admin/login` with `ADMIN_PASSWORD` → signed httpOnly session cookie guarding all
+  `/admin/*` APIs. The login screen is a single centered `.card` with a `.field` (password) and a
+  `.btn--primary` ("Unlock", `#i-lock`).
+
+### Inbox (sidebar)
+- Conversations as an email-style list, **most recent on top**. Each `.convo-item` shows the
+  visitor's initials avatar, name/initials, timestamp, and a one-line preview.
+- **Unread** (`.is-unread`): stronger text + an `.unread-dot`.
+- **Needs attention** (`.needs-attention`, set when `push_tool` fired): yellow-tinted row + a
+  yellow `#i-bell-dot`, shown until the human opens the thread.
+- **Active** (`.is-active`): a 3px blue selection bar on the left. *(This is a selection
+  indicator — the only sanctioned left bar; content panels never get one.)*
+
+### Thread (main panel)
+- Opening a conversation shows the full interaction (same bubble orientation as the visitor sees)
+  and **scrolls to the latest message**.
+- Opening marks every row read, clears `needs_attention`, and returns the updated rows — one
+  single Supabase round-trip (PostgREST "update … returning").
+- The composer posts **as the owner** ("Reply as `OWNER_NAME`"); the message lands as a
+  `.msg--human` bubble.
+
+### Keyboard
+- **↑ / ↓** move between conversations. **Enter** sends. **Shift+Enter** newline. Hints render as
+  `.kbd` chips under the composer.
+
+### Responsive (master/detail)
+- ≤ 860px: the inbox fills the screen. Tapping a conversation opens its thread (scrolled to
+  latest) with a **back** control (`#i-back`) to return. Desktop side-by-side layout is unchanged.
+
+---
+
+## States matrix
+
+| State | Visitor | Admin |
+|---|---|---|
+| Empty | Intro + example chips; composer focused | Inbox list; no thread selected |
+| Loading thread | Skeleton / spinner | Skeleton rows |
+| Streaming reply | `.tool-line` (mono) → bubble fills; `.typing` | Read-only; new rows arrive on poll |
+| Instant `Qn` | `.qn-tag`; reply restates the question | Shows as a normal visitor turn |
+| Tool: faq | `.tool-line` (cyan) | same, in history |
+| Tool: push | `.tool-line--push` (yellow) + "notified `OWNER_NAME`" | row flips to needs-attention |
+| Human joins | `.msg--human` (ring + tint + glow), "— live" | composer posts as owner |
+| Needs attention | — | yellow row + `bell-dot` until opened |
+| Unread | — | stronger text + unread dot |
+| Read | — | row normal; `status-dot--live` "read" badge |
+| Rate limited (429) | Friendly "sending too quickly" line | — |
+| Truncated input | Note appended to stored/echoed message | visible in history |
+| Error / offline | Inline retry affordance | toast / inline notice |
+| Mobile | Single column, docked composer | Master/detail: inbox → thread → back |
+| Light theme | Full peer of dark | Full peer of dark |

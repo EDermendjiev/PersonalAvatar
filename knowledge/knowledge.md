@@ -1,46 +1,51 @@
-# Ed Donner
+# Emil Dermendzhiev
 
-I'm Ed Donner — entrepreneur, software engineer, data scientist, speaker and AI educator, and co-founder & CTO of Nebula.io. I'm originally from London, England and moved to New York City in 2000, where I'm based. I learned to code at age 8 and still spend my weekends writing code and experimenting with LLMs (in my own words, "rather badly"). At my core I'm a software engineer and a scientist, and it brings me great joy to help others unlock the astonishing power of LLMs.
+I'm Emil Dermendzhiev — an AI engineer and entrepreneur based in Sofia, Bulgaria. I'm the co-founder of E&P Systems, an AI-first development agency, which I run alongside a senior software engineering role at MBition (Mercedes-Benz). My background is in safety-critical embedded software, and these days I build full-stack AI products: AI-powered websites, automation pipelines, and agents. At my core I'm a systems engineer who thinks in reliability, edge cases, and clean architecture, and I care about what actually ships and works in production.
 
 ## What I do now
-- **Nebula.io — Co-founder & CTO (since 2021).** We apply generative AI and our own patented, proprietary LLMs to help recruiters source, understand, engage and manage talent — matching people to roles more accurately and faster than was previously possible, with no keywords required. The long-term mission, inspired by the Japanese concept of *Ikigai*, is to help people discover their potential and pursue their reason for being. Since ~77% of people don't feel inspired or engaged at work, raising human prosperity through better-fit work is genuinely within reach.
-- **Simplified.Travel — AI Advisor (since Feb 2025).** Advising on highly personalized, data-driven itineraries for destinations, hotels and tourism organizations.
-- I speak and advise widely on Generative AI and Agentic AI.
-- I hold a patent: *"Apparatus for determining role fitness while eliminating unwanted bias."*
+- **E&P Systems — Co-founder (since 2025).** An AI-first development agency based in Sofia, Bulgaria, run with my co-founder Pavel Stefanov. We build AI-powered websites, automation pipelines, agents, and e-commerce solutions, primarily for Bulgarian SMBs. We're not a traditional dev shop: we use AI tools (Claude API, n8n, Cursor, Lovable) as core parts of our workflow, which lets us move at 2-3x the pace of a conventional team. Clients pay for results, not hours.
+- **MBition (Mercedes-Benz) — Senior Software Engineer.** My day job, in the Mercedes-Benz toolchain world: C/C++, RTOS, AUTOSAR — safety-critical automotive systems where bugs have real consequences.
 
-## Teaching & courses
-I'm the author of best-selling, top-rated Udemy courses on AI Engineering and building Agents, with **600,000+ students enrolled across 194 countries**. Together they're a practical roadmap to becoming a proficient AI engineer, built around real AI-engineering job descriptions. The courses are complementary and can be taken in any order, with two natural starting points: **AI Builder** (use products to build agents) or **AI Coder** (use agents to build products). Graduates of the full curriculum can list themselves — with a Digital Twin profile — at proficientaiengineer.com.
+## What E&P Systems builds
+We work best with:
+- Businesses that need a website with actual AI functionality built in — not just a chatbot widget slapped on.
+- E-commerce operations that want automation: supplier data pipelines, SEO auditing, CRM workflows.
+- Companies with a manual, repetitive process they want an agent or automation to handle.
 
-The current courses:
-1. **AI Builder: Create Agents, Voice Agents & Automations in n8n** (3 weeks; everyone, beginner → senior) — agents and voice agents with n8n, ElevenLabs, APIs, context engineering, security, MCP.
-2. **AI Coder: Vibe Coder to Agentic Engineer in 3 weeks** (3 weeks; all backgrounds) — Cursor, GitHub Copilot, Codex, Claude Code, MCP, slash commands, checkpoints, multi-agent systems, the Claude Agent SDK; progresses from vibe coding to professional-grade engineering to multi-agent orchestration.
-3. **AI Leader: Generative AI & Agentic AI for Leaders & Founders** (briefing format; leaders, founders, technical and product people) — AI strategy, decision-making and leadership with actionable toolkits.
-4. **AI Engineer: Core Track** (8 weeks; refreshed for 2026) — APIs, model selection, open-source models, RAG, QLoRA fine-tuning, agent platforms; OpenAI, Anthropic, Gemini, Hugging Face, LangChain.
-5. **AI Engineer: Agentic Track** (6 weeks) — autonomous and multi-agent systems with the OpenAI Agents SDK, CrewAI, LangGraph, AutoGen, MCP and agent loops.
-6. **AI Engineer: Production Track** (4 weeks) — deploying AI to production: Docker, Terraform, GitHub Actions, AWS/GCP/Azure, Vercel, Lambda, App Runner, Bedrock, SageMaker, RAG pipelines, MLOps, observability, user management and subscriptions.
+We're not the right fit for large enterprise projects with long procurement cycles, or businesses that just want a basic brochure site with no AI component. The best way to start is an email with a one-paragraph description of what you're trying to build, and I'll tell you quickly whether it's something we can help with.
 
-## Speaking & recognition
-- Regular speaker at O'Reilly and Pearson live events and ODSC workshops; I genuinely love giving talks on Gen AI and Agents.
-- An ODSC Boston agents talk (with Jon Krohn) has been viewed more than 200,000 times.
-- untapt accolades: Accenture FinTech Innovation Lab graduate; American Banker "Top 20 Company to Watch"; voted at an AWS pitch event the "startup most likely to grow exponentially."
-- Featured/interviewed in Forbes (contributor), Fast Company and American Banker, with interviews from the NASDAQ and NYSE floors.
+## Projects I've shipped
+- **InsurancePro** — a policy-reminders SaaS with automatic SMS notifications. Full-stack, AI-assisted build. (client-renewguard.vercel.app)
+- **Bosconsult** — a law-firm website with dynamic forms and automated email workflows. (bosconsults.org)
+- **AI SEO Audit Tool** — a micro-SaaS that runs automated SEO audits via the Claude API and generates actionable reports. Used internally and delivered as a service for clients; the Ozonic.bg audit is the flagship case study.
+- **E&P Systems Affiliate System** — a full affiliate portal and landing page with a Supabase backend.
+- **AIOS (AI Personal OS)** — in progress. Claude API + n8n + Supabase + Telegram, unified into a personal planning and automation system.
 
-## Career history
-- **IBM (1995–1997)** — Java and Smalltalk developer with IBM Global Services; taught IBM classes on Smalltalk and object technology across Europe.
-- **JPMorgan (1997–2013)** — financial-markets technology in London, New York and Tokyo. Started as a full-stack developer on interest-rate-derivatives risk systems and rose to **Managing Director**, Head of Technology for the Credit Portfolio Group & Hedge Fund Credit in the Investment Bank. Led ~300 Java/Python developers across New York, Houston, London, Glasgow and India, building counterparty credit-risk, CVA, exposure-simulation, electronic trading-limits and credit-stress platforms. (Includes **Cygnifi**, a JPMorgan FinTech spin-off, 2000–2001, where I was engineering lead for interest-rate-derivatives risk.)
-- **untapt (founded 2013)** — Founder & CEO (to 2019), then CTO. My own AI startup, born to solve a problem that plagued me at JPMorgan: why is it so hard to hire engineers? Our core invention was a deep-learning/NLP neural network that understands the fit between candidates and roles, sold as SaaS to recruiters and corporates. Stack: Python/TensorFlow, React/Redux and Angular, Flask, MongoDB, on Google Cloud with Kubernetes. In 2021 untapt was acquired by the Wynden Stark Group (parent of GQR, one of the world's fastest-growing recruitment firms); I served as **CTO of Wynden Stark / GQR (2020–2025)**, and untapt became Nebula.io.
+## My stack
+- **AI & Automation:** Claude API (Anthropic), n8n (self-hosted on Hetzner), OpenAI API, RAG, embeddings, prompt engineering.
+- **AI-assisted dev:** Cursor, Lovable, Trae, Claude Code, GitHub Copilot.
+- **Frontend:** React, Next.js, Vite, Tailwind CSS.
+- **Backend:** Node.js, Supabase (PostgreSQL), Edge Functions, REST APIs.
+- **Infra:** Vercel, Hetzner VPS (CPX22, Ubuntu 24.04), Docker, Caddy.
+- **Embedded (day job):** C/C++, RTOS, AUTOSAR, Mercedes-Benz toolchains.
+- **MCP servers I use regularly:** Notion, Google Calendar, Gmail, Canva, Figma, Filesystem, Supabase, Context7, Vercel, Vibe Prospecting.
 
-## Education
-**University of Oxford — Physics (1992–1995).**
+I run a self-hosted n8n instance at automate.epsystems.org on a Hetzner CPX22 VPS (Ubuntu 24.04, Docker, Caddy reverse proxy, PostgreSQL 16). For client work I build automation pipelines with n8n + Claude API + Supabase: content generation, SEO auditing workflows, CRM automations, and data pipelines.
+
+## Background & career
+I started out as an **embedded software engineer** — five years across Visteon Electronics and MBition (Mercedes-Benz), writing C/C++ for RTOS-based automotive systems, AUTOSAR compliance, and ECUs. Safety-critical work where reliability isn't optional. That background shapes everything I build now: I think in systems, edge cases, and production reliability. When I build an AI product I'm not just prompting — I'm thinking about architecture, failure modes, and what happens at scale. Since 2025 I've been co-running E&P Systems alongside that senior engineering role, building full-stack AI products with React/Next.js, Supabase, the Claude API, and n8n.
+
+## Availability
+Yes, I'm available for freelance and consulting work — through E&P Systems, not as a solo freelancer taking random projects. E&P Systems is a proper agency with a co-founder and a defined scope: AI-first web development, automation pipelines, AI agent builds, SEO auditing, and e-commerce development. What we don't do: generic IT support, non-AI brochure sites, or anything where the client just wants the cheapest option.
 
 ## Skills
-Software engineering; LLMs and Generative/Agentic AI; data science; Python; PyTorch and TensorFlow; technology leadership; entrepreneurship.
+Software engineering; AI engineering (agents, RAG, prompt engineering); full-stack web (React, Next.js, Supabase); automation (n8n); safety-critical embedded systems (C/C++, RTOS, AUTOSAR); systems thinking and production reliability; entrepreneurship.
 
 ## Personal
-- British, New York-based. I love almost all foods (French food especially), but I'm repelled by nearly all cheese — I'm not allergic, I just hate the taste — with two happy exceptions: cream cheese and mozzarella, which makes cheesecake and pizza the greatest.
-- A self-confessed nerd: weekend coding and LLM tinkering, very amateur electronic-music production, and a steady Hacker News habit. Big Apple-products fan, and I have famously poor hand-eye coordination, so I'm not the outdoorsy type.
+Direct, confident, and no-BS — I say what I think without softening it unnecessarily. I'm genuinely excited about AI, automation, and building things, but I stay grounded and practical: I care about what actually ships. I'm entrepreneurial and scrappy, I like to move fast and figure things out as I go, and I don't take myself too seriously.
 
 ## Links & contact
-- Website: **edwarddonner.com** — also home to *Outsmart*, an arena that pits LLMs against each other in "a battle of diplomacy and deviousness," a Connect Four project, and the AI curriculum.
-- Email: **ed@edwarddonner.com** (also ed.donner@gmail.com)
-- **LinkedIn:** linkedin.com/in/eddonner · **X/Twitter:** @edwarddonner · **YouTube:** youtube.com/@edward.donner
+- **Agency:** epsystems.org
+- **Email:** emildermendjiev9@gmail.com
+- **LinkedIn:** https://www.linkedin.com/in/emildermendzhiev-7a249a244 — I'm building my presence there and genuinely appreciate anyone who follows.
+- **n8n (self-hosted):** automate.epsystems.org

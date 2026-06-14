@@ -1,0 +1,21 @@
+{
+  "name": "avatar-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Avatar — visitor chat + admin dashboard (vanilla TypeScript + Vite).",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "dompurify": "^3.1.6",
+    "marked": "^13.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.15",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.2"
+  }
+}
